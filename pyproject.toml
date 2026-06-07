@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biofetch"
+version = "1.0.0"
+description = "Unified NCBI · UniProt · PDB CLI fetcher with local caching"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "BioFetch" }]
+keywords = ["bioinformatics", "NCBI", "UniProt", "PDB", "CLI", "genomics"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "biopython>=1.80",
+    "requests>=2.28",
+    "diskcache>=5.6",
+    "rich>=13.0",
+    "typer>=0.9",
+]
+
+[project.scripts]
+biofetch = "biofetch.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["biofetch*"]
