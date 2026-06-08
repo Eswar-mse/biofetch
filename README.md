@@ -26,7 +26,7 @@ BioFetch is a cross-platform Python CLI tool that lets you search, fetch, and sa
 ## Installation
 
 ```bash
-pip install biofetch
+pip install biofetch-cli
 ```
 
 Or install from source:
