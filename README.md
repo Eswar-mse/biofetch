@@ -5,6 +5,7 @@
 BioFetch is a cross-platform Python CLI tool that lets you search, fetch, and save biological records from NCBI, UniProt, and RCSB PDB — all from your terminal, with smart local caching so you never hit the same API twice.
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+[![PyPI](https://img.shields.io/pypi/v/biofetch-cli)](https://pypi.org/project/biofetch-cli/) 
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
 
