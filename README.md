@@ -134,3 +134,5 @@ All installable with `pip` — no conda, no virtual environment required.
 ## License
 
 MIT
+
+   Code written, developed and deployed by Sri Venkata Satya Sai Eswar M
