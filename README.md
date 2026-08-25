@@ -1,136 +1,156 @@
-# BioFetch 🧬
+<div align="center">
 
-> Unified NCBI · UniProt · PDB CLI fetcher with local caching
+# 🧬 BioFetch
 
-BioFetch is a cross-platform Python CLI tool that lets you search, fetch, and save biological records from NCBI, UniProt, and RCSB PDB — all from your terminal, with smart local caching so you never hit the same API twice.
+**Unified NCBI · UniProt · PDB CLI fetcher with local caching**
 
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-[![PyPI](https://img.shields.io/pypi/v/biofetch-cli)](https://pypi.org/project/biofetch-cli/) 
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
+[![Tests](https://github.com/Eswar-mse/biofetch/actions/workflows/ci.yml/badge.svg)](https://github.com/Eswar-mse/biofetch/actions)
+[![PyPI](https://img.shields.io/pypi/v/biofetch-cli?color=blue)](https://pypi.org/project/biofetch-cli/)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://pypi.org/project/biofetch-cli/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)](#)
 
----
-
-## Features
-
-- **Fetch** sequences and structures by accession from NCBI, UniProt, or PDB
-- **Search** all three databases with ranked results tables
-- **Info** panel — rich metadata without downloading the full file
-- **Batch** download hundreds of records with rate limiting and progress bar
-- **Local cache** — results stored on disk (7-day TTL by default), instant repeat lookups
-- **Multiple formats** — FASTA, GenBank, JSON, XML, PDB, mmCIF, TSV
-- **Beautiful terminal output** powered by Rich
-- No conda, no virtual environments needed — pure pip
+</div>
 
 ---
 
-## Installation
+BioFetch is a cross-platform Python CLI tool that gives you instant access to **NCBI**, **UniProt**, and **RCSB PDB** — all from your terminal. Search, fetch, and save biological records by accession ID, with smart local caching so you never hit the same API twice.
 
-```bash
-pip install biofetch-cli
-```
-
-Or install from source:
-
-```bash
-git clone https://github.com/yourname/biofetch.git
-cd biofetch
-pip install -e .
-```
+No conda. No virtual environments. Just pip and go.
 
 ---
 
-## Quick Start
+## ✨ Features
+
+| | Feature | Description |
+|---|---|---|
+| 🔍 | **Search** | Query NCBI, UniProt, and PDB with ranked results |
+| ⬇️ | **Fetch** | Download sequences and structures by accession ID |
+| 📋 | **Info** | Rich metadata panels — no full download needed |
+| 📦 | **Batch** | Bulk fetch hundreds of records with progress bar |
+| ⚡ | **Cache** | 7-day local disk cache — instant repeat lookups |
+| 🎨 | **Rich UI** | Beautiful terminal tables, spinners, and panels |
+| 🔄 | **Formats** | FASTA · GenBank · JSON · XML · PDB · mmCIF · TSV |
+| 🌍 | **Cross-platform** | Windows, Linux, macOS — pure pip |
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-# Fetch a nucleotide sequence from NCBI
-biofetch fetch NM_001301717 --source ncbi
+# Fetch a protein sequence from UniProt
+biofetch fetch P68871 --source uniprot
 
-# Fetch a UniProt protein entry with metadata info panel
+# Fetch with full metadata panel
 biofetch fetch P68871 --source uniprot --info
 
-# Fetch a PDB structure as a .pdb file
+# Download a PDB structure file
 biofetch fetch 1HHO --source pdb --format pdb --output 1HHO.pdb
 
-# Search UniProt for hemoglobin (Swiss-Prot reviewed only)
-biofetch search "hemoglobin" --source uniprot --reviewed --limit 5
+# Fetch a gene from NCBI
+biofetch fetch NM_007294 --source ncbi --db nucleotide
 
-# Search NCBI nucleotide database
-biofetch search "BRCA1 human mRNA" --source ncbi --db nucleotide --limit 10
+# Search UniProt (Swiss-Prot reviewed only)
+biofetch search "hemoglobin" --source uniprot --reviewed --limit 5
 
 # Search PDB for insulin structures
 biofetch search "insulin" --source pdb --limit 5
 
-# Get rich metadata for a UniProt entry
-biofetch info P68871 --source uniprot
+# Search NCBI
+biofetch search "BRCA1 human mRNA" --source ncbi --db nucleotide --limit 8
 
-# Get PDB entry summary
-biofetch info 1HHO --source pdb
-
-# Batch fetch multiple accessions
+# Batch fetch and save to folder
 biofetch batch P68871 P69905 P68873 --source uniprot --outdir ./sequences
 
-# Batch fetch NCBI records
-biofetch batch NM_001301717 NM_000546 --source ncbi --db nucleotide --outdir ./data
+# Cache management
+biofetch cache stats
+biofetch cache list
+biofetch cache clear
 ```
 
 ---
 
-## Commands
+## 📖 Commands
 
 | Command | Description |
-|---------|-------------|
-| `biofetch fetch <ID>` | Fetch a single record |
+|---|---|
+| `biofetch fetch <ID>` | Fetch a single record by accession |
 | `biofetch search <query>` | Search a database |
-| `biofetch info <ID>` | Show metadata summary |
-| `biofetch batch <IDs...>` | Batch fetch and save |
-| `biofetch cache stats` | Show cache size and count |
+| `biofetch info <ID>` | Rich metadata summary |
+| `biofetch batch <IDs...>` | Bulk fetch and save |
+| `biofetch cache stats` | Cache size and entry count |
 | `biofetch cache list` | List all cached keys |
-| `biofetch cache clear` | Clear the entire cache |
-| `biofetch cache delete <ID>` | Remove a specific cached entry |
+| `biofetch cache clear` | Wipe the cache |
+| `biofetch cache delete <ID>` | Remove one cached entry |
 | `biofetch version` | Print version |
 
 ---
 
-## Fetch Options
+## ⚙️ Fetch Options
 
 | Flag | Description |
-|------|-------------|
+|---|---|
 | `--source` / `-s` | `ncbi`, `uniprot`, or `pdb` |
 | `--format` / `-f` | `fasta`, `genbank`, `json`, `xml`, `pdb`, `cif`, `tsv` |
 | `--db` | NCBI database: `nucleotide`, `protein`, `gene`, `pubmed` |
-| `--output` / `-o` | Save to file path |
+| `--output` / `-o` | Save to file |
 | `--info` / `-i` | Show metadata panel |
-| `--no-preview` | Skip terminal sequence preview |
-| `--no-cache` | Force fresh API request |
+| `--no-preview` | Skip terminal preview |
+| `--no-cache` | Force fresh API call |
 
 ---
 
-## Cache
+## 💾 Cache
 
-BioFetch caches all responses locally:
+Results are cached locally for 7 days:
 
-- **Windows**: `%LOCALAPPDATA%\biofetch\`
 - **Linux/Mac**: `~/.cache/biofetch/`
+- **Windows**: `%LOCALAPPDATA%\biofetch\`
 
-Default TTL is **7 days**. Manage cache with the `biofetch cache` subcommands.
+```bash
+biofetch cache stats   # see how much is cached
+biofetch cache clear   # wipe everything
+```
 
 ---
 
-## Dependencies
+## 📦 Dependencies
 
 | Package | Purpose |
-|---------|---------|
+|---|---|
 | `biopython` | NCBI Entrez, sequence parsing |
 | `requests` | UniProt & PDB REST APIs |
 | `diskcache` | Local disk-based caching |
 | `rich` | Terminal formatting & tables |
 | `typer` | CLI framework |
 
-All installable with `pip` — no conda, no virtual environment required.
+All pure pip — no conda, no virtualenv required.
 
 ---
 
-## License
+## 🧪 Tests
 
-MIT
+```bash
+git clone https://github.com/Eswar-mse/biofetch.git
+cd biofetch
+pip install -e .
+python tests.py
+```
+
+34 tests, fully mocked — no network required to run the suite.
+
+---
+
+## 📄 License
+
+MIT © [Eswar-mse](https://github.com/Eswar-mse)
+
+---
+
+<div align="center">
+
+Built with 🧬 by [Sri Venkata Satya Sai Eswar M](https://github.com/Eswar-mse)
+
+**[PyPI](https://pypi.org/project/biofetch-cli/) · [Issues](https://github.com/Eswar-mse/biofetch/issues) · [Changelog](CHANGELOG.md)**
+
+</div>
