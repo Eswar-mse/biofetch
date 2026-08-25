@@ -148,9 +148,12 @@ def _deliver(data: str, output, preview: bool, source, accession: str, fmt: str,
                         t.add_row(s["id"], f"{s['length']:,}", f"{s['gc_percent']}%")
                     disp.console.print(t)
             elif source == Source.uniprot:
-                meta = uniprot_mod.fetch_uniprot_metadata(accession)
-                summary = uniprot_mod.extract_uniprot_summary(meta)
-                disp.print_uniprot_summary(summary)
+                meta = uniprot_mod.fetch_uniprot_metadata(accession.strip())
+                if isinstance(meta, dict):
+                    summary = uniprot_mod.extract_uniprot_summary(meta)
+                    disp.print_uniprot_summary(summary)
+                else:
+                    disp.print_warning("Could not parse UniProt metadata.")
             elif source == Source.pdb:
                 meta = pdb_mod.fetch_pdb_metadata(accession)
                 summary = pdb_mod.extract_pdb_summary(meta, accession)

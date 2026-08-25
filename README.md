@@ -154,3 +154,19 @@ Built with 🧬 by [Sri Venkata Satya Sai Eswar M](https://github.com/Eswar-mse)
 **[PyPI](https://pypi.org/project/biofetch-cli/) · [Issues](https://github.com/Eswar-mse/biofetch/issues) · [Changelog](CHANGELOG.md)**
 
 </div>
+
+---
+
+## 🖥️ Demo
+
+### Fetch a protein with full metadata
+![Fetch with UniProt info panel](docs/images/demo_fetch.png)
+
+### Search UniProt — ranked results table
+![UniProt search results](docs/images/demo_search.png)
+
+### PDB structure metadata
+![PDB entry summary](docs/images/demo_pdb.png)
+
+### Batch fetch multiple accessions
+![Batch fetch results](docs/images/demo_batch.png)

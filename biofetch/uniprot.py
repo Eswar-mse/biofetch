@@ -122,7 +122,7 @@ def extract_uniprot_summary(meta: dict) -> dict:
         "protein_name": full_name,
         "gene": gene,
         "organism": organism.get("scientificName", "N/A"),
-        "taxonomy": " > ".join([t.get("scientificName", "") for t in organism.get("lineage", [])[-3:]]),
+        "taxonomy": " > ".join([t.get("scientificName", "") if isinstance(t, dict) else str(t) for t in organism.get("lineage", [])[-3:]]),
         "length": seq.get("length", 0),
         "mass": seq.get("molWeight", 0),
         "reviewed": "Swiss-Prot" in meta.get("entryType", ""),
