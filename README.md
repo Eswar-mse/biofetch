@@ -29,7 +29,74 @@
 </p>
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
-..
+
+<div align="center">
+
+<h3>DOCUMENTATION</h3>
+<sub>EXPLORE BIOFETCH</sub>
+
+<br/>
+
+<table>
+<tr>
+<td align="center">
+<a href="#what-is-biofetch"><code>WHAT IS BIOFETCH</code></a>
+</td>
+<td align="center">
+<a href="#who-is-biofetch-for"><code>WHO IS BIOFETCH FOR</code></a>
+</td>
+<td align="center">
+<a href="#how-it-works"><code>HOW IT WORKS</code></a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="#architecture"><code>ARCHITECTURE</code></a>
+</td>
+<td align="center">
+<a href="#installation"><code>INSTALLATION</code></a>
+</td>
+<td align="center">
+<a href="#commands"><code>COMMANDS</code></a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="#quickstart"><code>QUICKSTART</code></a>
+</td>
+<td align="center">
+<a href="#formats-per-database"><code>FORMATS PER DATABASE</code></a>
+</td>
+<td align="center">
+<a href="#the-cache"><code>THE CACHE</code></a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="#using-biofetch-in-scripts"><code>USING BIOFETCH IN SCRIPTS</code></a>
+</td>
+<td align="center">
+<a href="#privacy-and-network"><code>PRIVACY AND NETWORK</code></a>
+</td>
+<td align="center">
+<a href="#limitations"><code>LIMITATIONS</code></a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<a href="#contributing"><code>CONTRIBUTING</code></a>
+</td>
+<td align="center">
+<a href="#citation"><code>CITATION</code></a>
+</td>
+<td align="center">
+<a href="#author"><code>AUTHOR</code></a>
+</td>
+</tr>
+</table>
+
+</div>
+
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
