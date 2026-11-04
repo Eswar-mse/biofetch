@@ -32,69 +32,29 @@
 
 <div align="center">
 
-<h3>DOCUMENTATION</h3>
-
+### DOCUMENTATION
 <br/>
 
-<table>
-<tr>
-<td align="center">
-<a href="#what-is-biofetch"><code>WHAT IS BIOFETCH</code></a>
-</td>
-<td align="center">
-<a href="#who-is-biofetch-for"><code>WHO IS BIOFETCH FOR</code></a>
-</td>
-<td align="center">
-<a href="#how-it-works"><code>HOW IT WORKS</code></a>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="#architecture"><code>ARCHITECTURE</code></a>
-</td>
-<td align="center">
-<a href="#installation"><code>INSTALLATION</code></a>
-</td>
-<td align="center">
-<a href="#commands"><code>COMMANDS</code></a>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="#quickstart"><code>QUICKSTART</code></a>
-</td>
-<td align="center">
-<a href="#formats-per-database"><code>FORMATS PER DATABASE</code></a>
-</td>
-<td align="center">
-<a href="#the-cache"><code>THE CACHE</code></a>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="#using-biofetch-in-scripts"><code>USING BIOFETCH IN SCRIPTS</code></a>
-</td>
-<td align="center">
-<a href="#privacy-and-network"><code>PRIVACY AND NETWORK</code></a>
-</td>
-<td align="center">
-<a href="#limitations"><code>LIMITATIONS</code></a>
-</td>
-</tr>
-<tr>
-<td align="center">
-<a href="#contributing"><code>CONTRIBUTING</code></a>
-</td>
-<td align="center">
-<a href="#citation"><code>CITATION</code></a>
-</td>
-<td align="center">
-<a href="#author"><code>AUTHOR</code></a>
-</td>
-</tr>
-</table>
+<a href="#what-is-biofetch"><img src="https://img.shields.io/badge/WHAT_IS_BIOFETCH-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#who-is-biofetch-for"><img src="https://img.shields.io/badge/WHO_IS_BIOFETCH_FOR-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#how-it-works"><img src="https://img.shields.io/badge/HOW_IT_WORKS-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#architecture"><img src="https://img.shields.io/badge/ARCHITECTURE-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#installation"><img src="https://img.shields.io/badge/INSTALLATION-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#commands"><img src="https://img.shields.io/badge/COMMANDS-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+
+<a href="#quickstart"><img src="https://img.shields.io/badge/QUICKSTART-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#formats-per-database"><img src="https://img.shields.io/badge/FORMATS_PER_DATABASE-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#the-cache"><img src="https://img.shields.io/badge/THE_CACHE-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#using-biofetch-in-scripts"><img src="https://img.shields.io/badge/USING_BIOFETCH_IN_SCRIPTS-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#privacy-and-network"><img src="https://img.shields.io/badge/PRIVACY_AND_NETWORK-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#limitations"><img src="https://img.shields.io/badge/LIMITATIONS-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+
+<a href="#contributing"><img src="https://img.shields.io/badge/CONTRIBUTING-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#citation"><img src="https://img.shields.io/badge/CITATION-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
+<a href="#author"><img src="https://img.shields.io/badge/AUTHOR-10271D?style=flat-square&labelColor=10271D&color=10271D" /></a>
 
 </div>
+
 
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
