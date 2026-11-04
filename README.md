@@ -34,11 +34,13 @@
 
 <div align="center">
 <h3>What is BioFetch?</h3>
+<img align="right" width="310" src="visual_assets/transfer.png"/>
 
 Biology lives in public databases. **NCBI** holds DNA, RNA and protein sequence records, **UniProt** holds curated information about proteins, and **RCSB PDB** holds 3D structures. Each one has its own web API and its own file formats. BioFetch puts all three behind a single command, `biofetch`, so you can look a record up, read a preview in your terminal, or save it as a file, without opening a browser or learning three APIs. It also remembers what it has already downloaded, so asking for the same record twice costs nothing.
 
 **Under the hood.** BioFetch is a Python command-line tool. [Typer](https://typer.tiangolo.com/) provides the commands and options, [Rich](https://github.com/Textualize/rich) draws the panels and tables, and NCBI is reached through Biopython's Entrez module. UniProt and RCSB PDB are reached through their public REST APIs using `requests`. Every download is stored in a local [diskcache](https://grantjenks.com/docs/diskcache/) database for seven days.
 </div>
+
 
 ```diff
 - curl "https://rest.uniprot.org/uniprotkb/P68871.fasta"   # again next week, and again next month
