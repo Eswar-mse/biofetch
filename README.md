@@ -33,7 +33,6 @@
 <div align="center">
 
 <h3>DOCUMENTATION</h3>
-<sub>EXPLORE BIOFETCH</sub>
 
 <br/>
 
