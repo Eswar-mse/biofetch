@@ -155,6 +155,7 @@ biofetch batch NM_001301717 NM_000546 --source ncbi --db nucleotide --outdir ./d
 <div align="center">
 <h3>  How it works </h3>
 </div>
+
 **In plain terms.** A **cache** is a local copy of an answer, kept so that asking the same question again does not need the internet. A **TTL** (time to live) says how long that copy is trusted before BioFetch asks the database again. BioFetch keeps copies for seven days. Public databases apply rate limits and most records change rarely, so a week-long TTL trades a little freshness for a lot of speed and good manners. **Backoff** means waiting a little longer after each failed attempt, so a busy server or a flaky connection gets time to recover.
 
 ```mermaid
@@ -189,9 +190,13 @@ A stored record counts as a hit while $t_{now} - t_{fetch} < 7\ \text{days}$.[^t
 
 **Errors.** Any failure is caught and printed as a red `✗` line. For `fetch`, `search` and `info` BioFetch then exits with code `1`, which makes failures easy to detect in scripts. In `batch`, one failing record never stops the others, and failed records are never written to the cache.
 
-## :keyboard: Commands
+<img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
+
+<div align="center">
+<h3>Commands</h3>
 
 Every command prints a small header panel first, then uses the same four status symbols:
+
 
 | Symbol | Meaning |
 | :--- | :--- |
@@ -199,6 +204,9 @@ Every command prints a small header panel first, then uses the same four status 
 | <span>✗</span> red | An error. The command exits with code `1` |
 | <span>⚠</span> yellow | A warning. The command carries on, for example a metadata lookup failed but the record was still delivered |
 | <span>→</span> cyan | Information, for example where a file was saved |
+
+<div>&nbsp;
+</div> 
 
 | Command | Purpose | `--source` |
 | :--- | :--- | :--- |
@@ -209,18 +217,11 @@ Every command prints a small header panel first, then uses the same four status 
 | `biofetch cache ...` | Inspect and manage the local cache | `delete` only |
 | `biofetch version` | Print the version | none |
 
+<div>&nbsp;
+</div> 
+
 ### `fetch`: get one record
-
-**In plain terms.** Downloads a single record by its accession ID and shows you the start of it. Add `--output` to save the whole record to a file.
-
-**What you will see.**
-
-1. A status line: `✓ P68871 fetched and cached` on the first run (with a spinner while it downloads), or `✓ P68871 served from cache` afterwards.
-2. A **Sequence Preview** panel with the first 24 lines of the record, followed by a note like `... [12 more lines]` when it is longer. The preview is shown for any format, not just FASTA.
-3. With `--output FILE`, the preview is replaced by `→ Saved to FILE (N bytes)`.
-4. With `--info`, an info panel for the record (described under `info` below).
-
-**Under the hood.** The cache is checked first unless you pass `--no-cache`. Note that `--no-cache` only skips *reading* the cache: the fresh download is still stored, so it also refreshes the saved copy. With `--no-preview` and no `--output` nothing of the record is printed at all, so use one of the two. Because the format is part of the cache key, the same record fetched as FASTA and as GenBank is cached twice, independently.
+Downloads a single record by its accession ID and shows you the start of it. Add `--output` to save the whole record to a file.
 
 | Flag | Description | Default |
 | :--- | :--- | :--- |
@@ -234,17 +235,12 @@ Every command prints a small header panel first, then uses the same four status 
 
 `--info` behaves differently per database. For **UniProt** it makes one extra request and shows the UniProt Summary panel. For **PDB** it shows the PDB Entry Summary. For **NCBI** it only works with `--format fasta` and shows a small table with the ID, length and GC percentage of each sequence, computed locally. If the extra lookup fails you get a `⚠` warning and the record is still delivered.
 
+<div>&nbsp;
+</div> 
+
 ### `search`: find records
 
-**In plain terms.** Searches one database and lists the best matches, so you can find the accession to fetch.
-
-**What you will see.** The output depends on the database, because each one returns different information:
-
-- **NCBI** prints `Found N total results — showing top K` and a table of numeric Entrez IDs with the database name.[^uid] These IDs can be passed straight to `fetch`.
-- **UniProt** prints a table with the accession, protein name (cut at 50 characters), gene, organism (cut at 30), length in amino acids, and a `✓` when the entry is reviewed.
-- **PDB** prints PDB IDs with a relevance score. Only experimentally determined structures are searched, so computed models are excluded.
-
-**Under the hood.** Your query is passed to the database as written, so each database's own search syntax works: Entrez field tags such as `BRCA1[Gene] AND human[Organism]` for NCBI, and field queries such as `gene:BRCA1 AND organism_id:9606` for UniProt. `--reviewed` simply appends `AND reviewed:true` to the UniProt query. Searches are single attempts and are not cached.
+Searches one database and lists the best matches, so you can find the accession to fetch.
 
 | Flag | Description | Default |
 | :--- | :--- | :--- |
@@ -253,11 +249,12 @@ Every command prints a small header panel first, then uses the same four status 
 | `--limit` / `-n` | Maximum number of results | `10` |
 | `--reviewed` | UniProt only: Swiss-Prot reviewed entries | off |
 
+<div>&nbsp;
+</div> 
+
 ### `info`: metadata without the sequence
 
-**In plain terms.** Shows a tidy summary panel about a record, such as what it is, where it comes from and how big it is, without downloading the sequence itself.
-
-**What you will see.** One panel, whose fields depend on the database:
+Shows a tidy summary panel about a record, such as what it is, where it comes from and how big it is, without downloading the sequence itself.
 
 | Database | Panel | Fields |
 | :--- | :--- | :--- |
@@ -267,13 +264,12 @@ Every command prints a small header panel first, then uses the same four status 
 
 **Under the hood.** `info` always makes live requests and does not use the cache. Only PDB entry metadata is retried on failure.
 
+<div>&nbsp;
+</div> 
+
 ### `batch`: many records at once
 
-**In plain terms.** Give it a list of accession IDs and it fetches each one and saves it as its own file in a folder.
-
-**What you will see.** A live spinner with the accession being processed and the elapsed time, then a **Batch Fetch Results** table with one row per record (`OK` or `Failed`, and its size), and finally `→ Files saved to <folder>`.
-
-**Under the hood.** Records are processed one after another. Each record is looked up in the cache first, and every successful download is cached immediately. That makes batches easy to resume: press <kbd>Ctrl</kbd> + <kbd>C</kbd> at any time, run the same command again, and everything already fetched is served from cache. Files are named `<accession>.<extension>` using `fasta`, `gb`, `json`, `xml`, `txt`, `pdb` or `cif` (any other format name is used as the extension), and existing files with the same name are overwritten. A failed record shows as `Failed` in the table and is not saved, but the command still finishes with exit code `0`, so check the table or the output folder.
+Give it a list of accession IDs and it fetches each one and saves it as its own file in a folder. A live spinner with the accession being processed and the elapsed time, then a **Batch Fetch Results** table with one row per record (`OK` or `Failed`, and its size), and finally `→ Files saved to <folder>`.
 
 | Flag | Description | Default |
 | :--- | :--- | :--- |
@@ -283,9 +279,13 @@ Every command prints a small header panel first, then uses the same four status 
 | `--outdir` / `-d` | Folder to save files in (created if missing) | `.` |
 | `--no-cache` | Skip the cache read for every record | off |
 
+
+<div>&nbsp;
+</div> 
+
 ### `cache`: manage stored records
 
-**In plain terms.** Four small commands to look after the local copies BioFetch keeps.
+Four small commands to look after the local copies BioFetch keeps.
 
 | Command | What it prints |
 | :--- | :--- |
@@ -295,10 +295,10 @@ Every command prints a small header panel first, then uses the same four status 
 | `biofetch cache clear` | A confirmation question, then `✓ Cache cleared.` |
 
 **Under the hood.** `cache delete` needs the same format the record was fetched with and defaults to `fasta`, so for a record fetched as JSON use `--format json`. `cache clear` asks for confirmation unless you pass `--force` / `-f`.
+</div>
+<div>&nbsp;
+</div> 
 
-### `version`
-
-Prints the installed version, for example `BioFetch v1.0.2`.
 
 ## :page_facing_up: Formats per database
 
