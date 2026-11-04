@@ -29,17 +29,20 @@
 </p>
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
+..
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 </div>
 
 <div align="center">
 <h3>WHAT IS BIOFETCH</h3>
+</div>
 <img align="right" width="310" src="visual_assets/transfer.png"/>
 
 Biology lives in public databases. **NCBI** holds DNA, RNA and protein sequence records, **UniProt** holds curated information about proteins, and **RCSB PDB** holds 3D structures. Each one has its own web API and its own file formats. BioFetch puts all three behind a single command, `biofetch`, so you can look a record up, read a preview in your terminal, or save it as a file, without opening a browser or learning three APIs. It also remembers what it has already downloaded, so asking for the same record twice costs nothing.
 
 **Under the hood.** BioFetch is a Python command-line tool. [Typer](https://typer.tiangolo.com/) provides the commands and options, [Rich](https://github.com/Textualize/rich) draws the panels and tables, and NCBI is reached through Biopython's Entrez module. UniProt and RCSB PDB are reached through their public REST APIs using `requests`. Every download is stored in a local [diskcache](https://grantjenks.com/docs/diskcache/) database for seven days.
-</div>
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
@@ -175,7 +178,6 @@ To uninstall, run `pip uninstall biofetch-cli`. Your cached records stay on disk
 <h3>COMMANDS</h3>
 
 A consistent command-line interface for retrieving, searching, inspecting and managing biological records.
-
 </div>
 
 <table>
@@ -213,9 +215,21 @@ Every command begins with a header panel and uses these consistent status indica
 </table>
 
 ---
+<p align="center">
+  <sub>QUICK NAVIGATION</sub><br/><br/>
+  <a href="#fetch">FETCH</a>
+  &nbsp; │ &nbsp;
+  <a href="#search">SEARCH</a>
+  &nbsp; │ &nbsp;
+  <a href="#info">INFO</a>
+  &nbsp; │ &nbsp;
+  <a href="#batch">BATCH</a>
+  &nbsp; │ &nbsp;
+  <a href="#cache">CACHE</a>
+</p>
 
+<a id="FETCH"></a>
 ### `fetch` · Retrieve a record
-
 Downloads a record using its accession ID and displays a terminal preview. Use `--output` to save the complete record.
 
 <table>
@@ -263,8 +277,8 @@ If an additional metadata lookup fails, BioFetch displays a `⚠` warning while 
 
 ---
 
+<a id="SEARCH"></a>
 ### `search` · Find records
-
 Searches a selected database and returns matching accessions, helping you identify records to retrieve.
 
 <table>
@@ -298,8 +312,8 @@ Returns the best matching records from the selected database.
 
 ---
 
+<a id="INFO"></a>
 ### `info` · Inspect metadata
-
 Displays a structured summary of a record without downloading its sequence.
 
 | Database | Panel | Information provided |
@@ -312,8 +326,8 @@ Displays a structured summary of a record without downloading its sequence.
 
 ---
 
+<a id="BATCH"></a>
 ### `batch` · Retrieve multiple records
-
 Provide multiple accession IDs to retrieve each record and save it as an individual file in a specified directory.
 
 During execution, BioFetch displays a live spinner with the accession being processed and elapsed time, followed by a **Batch Fetch Results** table showing each record's status (`OK` or `Failed`) and file size. A final message indicates where the files were saved.
@@ -350,8 +364,8 @@ Each accession is saved separately in the specified directory.
 
 ---
 
+<a id="CACHE"></a>
 ### `cache` · Manage stored records
-
 BioFetch maintains local copies of downloaded records to avoid unnecessary repeat requests.
 
 | Command | Behaviour |
