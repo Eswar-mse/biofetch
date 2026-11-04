@@ -150,9 +150,11 @@ biofetch batch P68871 P69905 P68873 --source uniprot --outdir ./sequences
 # Batch fetch NCBI records
 biofetch batch NM_001301717 NM_000546 --source ncbi --db nucleotide --outdir ./data
 ```
+<img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
-## :microscope: How it works
-
+<div align="center">
+<h3>  How it works </h3>
+</div>
 **In plain terms.** A **cache** is a local copy of an answer, kept so that asking the same question again does not need the internet. A **TTL** (time to live) says how long that copy is trusted before BioFetch asks the database again. BioFetch keeps copies for seven days. Public databases apply rate limits and most records change rarely, so a week-long TTL trades a little freshness for a lot of speed and good manners. **Backoff** means waiting a little longer after each failed attempt, so a busy server or a flaky connection gets time to recover.
 
 ```mermaid
