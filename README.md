@@ -33,7 +33,7 @@
 </div>
 
 <div align="center">
-<h3>What is BioFetch?</h3>
+<h3>WHAT IS BIOFETCH</h3>
 <img align="right" width="310" src="visual_assets/transfer.png"/>
 
 Biology lives in public databases. **NCBI** holds DNA, RNA and protein sequence records, **UniProt** holds curated information about proteins, and **RCSB PDB** holds 3D structures. Each one has its own web API and its own file formats. BioFetch puts all three behind a single command, `biofetch`, so you can look a record up, read a preview in your terminal, or save it as a file, without opening a browser or learning three APIs. It also remembers what it has already downloaded, so asking for the same record twice costs nothing.
@@ -45,7 +45,7 @@ Biology lives in public databases. **NCBI** holds DNA, RNA and protein sequence 
 
 
 <div align="center">
-<h3> Who Is BioFetch For?</h3>
+<h3> WHO IS BIOFETCH FOR</h3>
 </div>
 
 - **Biologists and students** who need quick access to sequence or structure files without writing code.
@@ -58,7 +58,7 @@ Biology lives in public databases. **NCBI** holds DNA, RNA and protein sequence 
 
 
 <div align="center">
-<h3>  How it works </h3>
+<h3> HOW IT WORKS </h3>
 </div>
 
 **In plain terms.** A **cache** is a local copy of an answer, kept so that asking the same question again does not need the internet. A **TTL** (time to live) says how long that copy is trusted before BioFetch asks the database again. BioFetch keeps copies for seven days. Public databases apply rate limits and most records change rarely, so a week-long TTL trades a little freshness for a lot of speed and good manners. **Backoff** means waiting a little longer after each failed attempt, so a busy server or a flaky connection gets time to recover.
@@ -98,7 +98,7 @@ A stored record counts as a hit while $t_{now} - t_{fetch} < 7\ \text{days}$.[^t
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3>Architecture</h3>
+<h3>ARCHITECTURE</h3>
 </div>
 **In plain terms.** BioFetch is split into small parts that each do one job: one part reads your command, one part talks to each database, one part remembers answers, and one part draws the output.
 
@@ -139,7 +139,7 @@ biofetch/
 
 
 <div align="center">
-<h3>Installation </h3>
+<h3>INSTALLATION </h3>
 </div>
 
 ```bash
@@ -168,116 +168,213 @@ To uninstall, run `pip uninstall biofetch-cli`. Your cached records stay on disk
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
+
+
 <div align="center">
-<h3>Commands</h3>
 
-Every command prints a small header panel first, then uses the same four status symbols:
+<h3>COMMANDS</h3>
 
+A consistent command-line interface for retrieving, searching, inspecting and managing biological records.
+
+</div>
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<h4>Terminal Status Symbols</h4>
 
 | Symbol | Meaning |
-| :--- | :--- |
-| <span>✓</span> green | Success, for example a record was fetched, served from cache or cleared |
-| <span>✗</span> red | An error. The command exits with code `1` |
-| <span>⚠</span> yellow | A warning. The command carries on, for example a metadata lookup failed but the record was still delivered |
-| <span>→</span> cyan | Information, for example where a file was saved |
+|:---:|---|
+| <span>✓</span> | Success — fetched, cached or cleared |
+| <span>✗</span> | Error — command exits with code `1` |
+| <span>⚠</span> | Warning — operation continues despite a non-critical failure |
+| <span>→</span> | Information — indicates where a file was saved |
 
-<div>&nbsp;
-</div> 
+Every command begins with a header panel and uses these consistent status indicators.
 
-| Command | Purpose | `--source` |
-| :--- | :--- | :--- |
-| `biofetch fetch <ID>` | Get one record | required |
-| `biofetch search <query>` | Find records by keyword | optional, defaults to `ncbi` |
-| `biofetch info <ID>` | Show metadata without downloading the sequence | required |
-| `biofetch batch <IDs...>` | Fetch many records and save each as a file | required |
-| `biofetch cache ...` | Inspect and manage the local cache | `delete` only |
-| `biofetch version` | Print the version | none |
+</td>
+<td width="50%" valign="top">
 
-<div>&nbsp;
-</div> 
+<h4>Command Overview</h4>
 
-### `fetch`: get one record
-Downloads a single record by its accession ID and shows you the start of it. Add `--output` to save the whole record to a file.
+| Command | Purpose |
+|---|---|
+| `fetch <ID>` | Retrieve one record |
+| `search <query>` | Find records by keyword |
+| `info <ID>` | Inspect metadata |
+| `batch <IDs...>` | Fetch multiple records |
+| `cache ...` | Manage local cache |
+| `version` | Display version |
 
-| Flag | Description | Default |
-| :--- | :--- | :--- |
-| `--source` / `-s` | `ncbi`, `uniprot` or `pdb` | required |
-| `--format` / `-f` | Output format, see [formats per database](#formats-per-database) | `fasta` |
-| `--db` | NCBI database: `nucleotide`, `protein`, `gene` or `pubmed` | `nucleotide` |
-| `--output` / `-o` | Save the full record to this file | print a preview |
-| `--info` / `-i` | Also show a metadata panel | off |
-| `--preview` / `--no-preview` | Show or hide the terminal preview | preview on |
-| `--no-cache` | Skip the cache read and force a fresh download | off |
 
-`--info` behaves differently per database. For **UniProt** it makes one extra request and shows the UniProt Summary panel. For **PDB** it shows the PDB Entry Summary. For **NCBI** it only works with `--format fasta` and shows a small table with the ID, length and GC percentage of each sequence, computed locally. If the extra lookup fails you get a `⚠` warning and the record is still delivered.
+</td>
+</tr>
+</table>
 
-<div>&nbsp;
-</div> 
+---
 
-### `search`: find records
+### `fetch` · Retrieve a record
 
-Searches one database and lists the best matches, so you can find the accession to fetch.
+Downloads a record using its accession ID and displays a terminal preview. Use `--output` to save the complete record.
+
+<table>
+<tr>
+<td width="80%" valign="top">
 
 | Flag | Description | Default |
-| :--- | :--- | :--- |
-| `--source` / `-s` | `ncbi`, `uniprot` or `pdb` | `ncbi` |
-| `--db` | NCBI database: `nucleotide`, `protein`, `gene` or `pubmed` | `nucleotide` |
+|---|---|---|
+| `--source` / `-s` | `ncbi`, `uniprot`, `pdb` | Required |
+| `--format` / `-f` | Output format ([formats](#formats-per-database)) | `fasta` |
+| `--db` | NCBI database: `nucleotide`, `protein`, `gene`, `pubmed` | `nucleotide` |
+| `--output` / `-o` | Save complete record to a file | Preview |
+| `--info` / `-i` | Display additional metadata | Off |
+| `--preview` / `--no-preview` | Enable or disable terminal preview | On |
+| `--no-cache` | Force a fresh download | Off |
+
+</td>
+<td width="35%" valign="top">
+
+<h4>Example</h4>
+
+```bash
+biofetch fetch P68871 \
+  -s uniprot \
+  --info
+```
+
+**Output behaviour**
+
+- Record preview by default.
+- Complete file with `--output`.
+- Additional metadata with `--info`.
+
+</td>
+</tr>
+</table>
+
+**Database-specific `--info` behaviour**
+
+- **UniProt:** Makes an additional request and displays the UniProt Summary panel.
+- **PDB:** Displays the PDB Entry Summary.
+- **NCBI:** Available only with `--format fasta`. Displays sequence ID, length and GC percentage, calculated locally.
+
+If an additional metadata lookup fails, BioFetch displays a `⚠` warning while still delivering the record.
+
+---
+
+### `search` · Find records
+
+Searches a selected database and returns matching accessions, helping you identify records to retrieve.
+
+<table>
+<tr>
+<td width="65%" valign="top">
+
+| Flag | Description | Default |
+|---|---|---|
+| `--source` / `-s` | `ncbi`, `uniprot`, `pdb` | `ncbi` |
+| `--db` | NCBI database: `nucleotide`, `protein`, `gene`, `pubmed` | `nucleotide` |
 | `--limit` / `-n` | Maximum number of results | `10` |
-| `--reviewed` | UniProt only: Swiss-Prot reviewed entries | off |
+| `--reviewed` | UniProt only: Swiss-Prot reviewed entries | Off |
 
-<div>&nbsp;
-</div> 
+</td>
+<td width="35%" valign="top">
 
-### `info`: metadata without the sequence
+<h4>Example</h4>
 
-Shows a tidy summary panel about a record, such as what it is, where it comes from and how big it is, without downloading the sequence itself.
+```bash
+biofetch search \
+  "hemoglobin" \
+  -s uniprot \
+  --reviewed
+```
 
-| Database | Panel | Fields |
-| :--- | :--- | :--- |
-| **UniProt** | UniProt Summary | Accession, entry name, protein name, gene, organism, the last three taxonomy levels, length, mass, Swiss-Prot or TrEMBL status, up to ten keywords, and the first function description (cut at 300 characters) |
-| **PDB** | PDB Entry Summary | PDB ID, title, experimental method, resolution in Å, R-free, R-work, polymer chain count and atom count |
-| **NCBI** | NCBI Record Info | Every field of NCBI's summary record, with long values cut at 120 characters |
+Returns the best matching records from the selected database.
 
-**Under the hood.** `info` always makes live requests and does not use the cache. Only PDB entry metadata is retried on failure.
+</td>
+</tr>
+</table>
 
-<div>&nbsp;
-</div> 
+---
 
-### `batch`: many records at once
+### `info` · Inspect metadata
 
-Give it a list of accession IDs and it fetches each one and saves it as its own file in a folder. A live spinner with the accession being processed and the elapsed time, then a **Batch Fetch Results** table with one row per record (`OK` or `Failed`, and its size), and finally `→ Files saved to <folder>`.
+Displays a structured summary of a record without downloading its sequence.
+
+| Database | Panel | Information provided |
+|---|---|---|
+| **UniProt** | UniProt Summary | Accession, entry name, protein name, gene, organism, last three taxonomy levels, length, mass, Swiss-Prot/TrEMBL status, up to 10 keywords and first function description (maximum 300 characters) |
+| **PDB** | PDB Entry Summary | PDB ID, title, experimental method, resolution (Å), R-free, R-work, polymer chain count and atom count |
+| **NCBI** | NCBI Record Info | All fields from NCBI's summary record, with long values truncated to 120 characters |
+
+**Under the hood:** `info` always makes live requests and bypasses the cache. Only PDB entry metadata is retried on failure.
+
+---
+
+### `batch` · Retrieve multiple records
+
+Provide multiple accession IDs to retrieve each record and save it as an individual file in a specified directory.
+
+During execution, BioFetch displays a live spinner with the accession being processed and elapsed time, followed by a **Batch Fetch Results** table showing each record's status (`OK` or `Failed`) and file size. A final message indicates where the files were saved.
+
+<table>
+<tr>
+<td width="65%" valign="top">
 
 | Flag | Description | Default |
-| :--- | :--- | :--- |
-| `--source` / `-s` | `ncbi`, `uniprot` or `pdb` | required |
+|---|---|---|
+| `--source` / `-s` | `ncbi`, `uniprot`, `pdb` | Required |
 | `--format` / `-f` | Output format | `fasta` |
 | `--db` | NCBI database | `nucleotide` |
-| `--outdir` / `-d` | Folder to save files in (created if missing) | `.` |
-| `--no-cache` | Skip the cache read for every record | off |
+| `--outdir` / `-d` | Output directory (created if missing) | `.` |
+| `--no-cache` | Skip cache reads for all records | Off |
 
+</td>
+<td width="35%" valign="top">
 
-<div>&nbsp;
-</div> 
+<h4>Example</h4>
 
-### `cache`: manage stored records
+```bash
+biofetch batch \
+  P68871 P69905 \
+  -s uniprot \
+  -d results/
+```
 
-Four small commands to look after the local copies BioFetch keeps.
+Each accession is saved separately in the specified directory.
 
-| Command | What it prints |
-| :--- | :--- |
-| `biofetch cache stats` | A Cache Stats panel with the number of cached entries, the cache size in KB or MB, and the cache folder |
-| `biofetch cache list` | `N cached entries:` followed by one key per line, such as `uniprot:P68871:fasta` |
-| `biofetch cache delete <ID> --source <source>` | `✓ Deleted cache entry: uniprot:P68871:fasta`, or a `⚠` warning if there was no such entry |
-| `biofetch cache clear` | A confirmation question, then `✓ Cache cleared.` |
+</td>
+</tr>
+</table>
 
-**Under the hood.** `cache delete` needs the same format the record was fetched with and defaults to `fasta`, so for a record fetched as JSON use `--format json`. `cache clear` asks for confirmation unless you pass `--force` / `-f`.
-</div>
-<div>&nbsp;
-</div>
-<img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
+---
+
+### `cache` · Manage stored records
+
+BioFetch maintains local copies of downloaded records to avoid unnecessary repeat requests.
+
+| Command | Behaviour |
+|---|---|
+| `biofetch cache stats` | Displays cached entry count, cache size (KB/MB) and cache directory |
+| `biofetch cache list` | Lists cached keys, e.g. `uniprot:P68871:fasta` |
+| `biofetch cache delete <ID> --source <source>` | Deletes a specific entry or displays a `⚠` warning if it does not exist |
+| `biofetch cache clear` | Requests confirmation before clearing the cache |
+
+**Cache details**
+
+- `cache delete` uses the same format as the original fetch and defaults to `fasta`. For a JSON record, specify `--format json`.
+- `cache clear` requires confirmation unless `--force` / `-f` is supplied.
 
 <div align="center">
-<h3> Quick start </h3>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
+
+</div>
+
+
+<div align="center">
+<h3> QUICK START </h3>
 </div>
 <!-- visual slot: demo (the one place on this page where height is welcome) -->
 
@@ -335,7 +432,7 @@ biofetch batch NM_001301717 NM_000546 --source ncbi --db nucleotide --outdir ./d
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3> Formats per database </h3>
+<h3> FORMATS PER DATABASE </h3>
 </div>
 <a id="formats-per-database"></a>
 
@@ -361,7 +458,7 @@ biofetch batch NM_001301717 NM_000546 --source ncbi --db nucleotide --outdir ./d
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3> The cache </h3>
+<h3> THE CACHE </h3>
 </div>
 <a id="the-cache"></a>
 
@@ -390,7 +487,7 @@ biofetch batch NM_001301717 NM_000546 --source ncbi --db nucleotide --outdir ./d
 
 
 <div align="center">
-<h3>Using BioFetch in scripts </h3>
+<h3>USING BIOFETCH IN SCRIPTS </h3>
 </div>
 
 **In plain terms.** BioFetch works well inside shell scripts and pipelines, as long as you remember two things: use `--output` to get the full record, and check the exit code.
@@ -413,7 +510,7 @@ biofetch batch (Get-Content accessions.txt) --source uniprot --outdir .\sequence
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3> Privacy and network </h3>
+<h3> PRIVACY AND NETWORK </h3>
 </div>
 
 BioFetch has no server, account, API key or telemetry of its own. The only network traffic is between your computer and NCBI, UniProt and RCSB PDB, and what is sent is just the accession or search query you typed. Cached records are plain copies of public data stored in your user cache folder. NCBI is contacted through Biopython and UniProt and PDB through `requests`, so if you work behind a proxy, set the usual `HTTP_PROXY` and `HTTPS_PROXY` environment variables.
@@ -421,7 +518,7 @@ BioFetch has no server, account, API key or telemetry of its own. The only netwo
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3> Limitations</h3>
+<h3> LIMITATIONS</h3>
 </div>
 Knowing these up front saves surprises:
 
@@ -436,7 +533,7 @@ Knowing these up front saves surprises:
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3>Contributing</h3>
+<h3>CONTRIBUTING</h3>
 </div>
 
 Found a bug or have an idea? [Open an issue](https://github.com/Eswar-mse/biofetch/issues). Pull requests are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md) first.
@@ -454,7 +551,7 @@ The test suite uses mocked API responses, so it runs offline in a few seconds. E
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 <div align="center">
-<h3> Citation</h3>
+<h3> CITATION</h3>
 </div>
 
 If BioFetch helps your research, please cite it:
@@ -471,7 +568,7 @@ If BioFetch helps your research, please cite it:
 <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:020a04,50:15803d,100:020a04" alt="" width="100%"/>
 
 <div align="center">
-<h3>Author</h3>
+<h3>AUTHOR</h3>
 </div>
 
 **Sri Venkata Satya Sai Eswar Moparti**, author and maintainer of biofetch.<br>
